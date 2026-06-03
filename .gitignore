@@ -1,5 +1,5 @@
 app/.vite/deps/
 server/.venv/
-server/.venv/Lib/
+.venv/
 package-lock.json
 node_modules/
