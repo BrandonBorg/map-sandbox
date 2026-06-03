@@ -1,2 +1,4 @@
 app/.vite/deps/
 server/.venv/
+package-lock.json
+node_modules/
