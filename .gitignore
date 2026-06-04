@@ -1,5 +1,5 @@
 app/.vite/deps/
 server/.venv/
-.venv/
+**/__pycache__/**
 package-lock.json
 node_modules/
