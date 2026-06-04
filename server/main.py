@@ -1,11 +1,14 @@
 from fastapi import FastAPI
-
+from database.connection import init_db
+from api.router import api_router
 app = FastAPI()
+
+@app.on_event("startup")
+def startup():
+    init_db()
 
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q":q}
+app.include_router(api_router)
