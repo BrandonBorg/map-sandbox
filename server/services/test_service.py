@@ -2,10 +2,11 @@ from database.connection import get_db
 
 def insert_user(user: str):
     db = get_db()
-    return  db.execute(
+    db.execute(
         "INSERT INTO test (name) VALUES (?)",
         [user]
     )
+    return True
 
 def fetch_user(user:str):
     db = get_db()

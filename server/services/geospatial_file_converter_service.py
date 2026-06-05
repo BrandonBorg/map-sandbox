@@ -1,6 +1,4 @@
 import geopandas as gpd
-import pyarrow as pa
-import pyarrow.parquet as pq
 
 def geojson_to_parquet (file_name):
     try:
@@ -10,11 +8,12 @@ def geojson_to_parquet (file_name):
 
         # read geojson file
         geo_data_frame = gpd.read_file(input_path, use_arrow=True)
+        geo_data_frame.set_crs(epsg=4326)
 
-        geo_data_frame["id"] = range(len(geo_data_frame))
+        # apply additional meta data for filtering 
         geo_data_frame["source"] = file_name
 
-        # convert to pyarrow table
+        # convert to parquet and store to file
         geo_data_frame.to_parquet(
             output_path,
             engine="pyarrow",

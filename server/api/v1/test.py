@@ -12,9 +12,10 @@ def test():
 @test_router.get("/{name}")
 def read_item(name: str):
     response =  fetch_user(name)
+    print (response)
     return {"response": response}
 
 @test_router.put("/{name}")
-def read_item(name: str):
+def put_item(name: str):
     response =  insert_user(name)
     return {"response": response}
