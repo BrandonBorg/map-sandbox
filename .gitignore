@@ -3,3 +3,5 @@ server/.venv/
 **/__pycache__/**
 package-lock.json
 node_modules/
+server/files/input/
+server/files/output/
