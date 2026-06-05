@@ -1,6 +1,7 @@
 from fastapi import APIRouter
-test_router = APIRouter(prefix="/test", tags=["test"])
 from services.test_service import *
+
+test_router = APIRouter(prefix="/test", tags=["test"])
 
 @test_router.get("/")
 def test():
