@@ -17,12 +17,73 @@ export default function TestMap()
         }
         console.log("map hit")
         
-        mapGL.current = new maplibregl.Map({
-        container: mapContainer.current, // container id
-        style: "https://demotiles.maplibre.org/globe.json", // style URL
-        center: [0, 0], // starting position [lng, lat]
-        zoom: 1 // starting zoom
-    })
+        const map = new maplibregl.Map({
+            container: mapContainer.current, // container id
+             style: {
+            version: 8,
+            sources: {
+                'simple_geometry': {
+                    type: 'vector',
+                    tiles: [`http://127.0.0.1:8000/v1/tiles/simple_geometry/{z}/{x}/{y}.pbf`],
+                    minzoom: 2
+                },
+                // Also use a public open source basemap
+                'osm': {
+                    type: 'raster',
+                    tiles: [
+                        'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    ],
+                    tileSize: 256,
+                    minzoom: 2
+                }
+            },
+            layers: [
+                {
+                    id: 'background',
+                    type: 'background',
+                    paint: { 'background-color': '#a0c8f0' }
+                },
+                {
+                    id: 'osm',
+                    type: 'raster',
+                    source: 'osm',
+                    minzoom: 2,
+                    maxzoom: 19
+                },
+                {
+                    id: 'simple_geometry-fill',
+                    type: 'fill',
+                    source: 'simple_geometry',
+                    'source-layer': 'layer',
+                    paint: {
+                        'fill-color': 'blue',
+                        'fill-opacity': 0.6,
+                        'fill-outline-color': '#ffffff'
+                    }
+                },
+                {
+                    id: 'simple_geometry-stroke',
+                    type: 'line',
+                    source: 'simple_geometry',
+                    'source-layer': 'simple_geometry',
+                    paint: {
+                        'line-color': 'black',
+                        'line-width': 0.5
+                    }
+                }
+            ]
+        },
+          center: [-63.1311, 46.2382],
+            zoom: 12
+        })
+
+        // todo fix this
+
+        mapGL.current = map;
+       
+      
     },[])
     
 
