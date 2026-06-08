@@ -6,7 +6,7 @@ _db = None
 # initializes db instance
 def init_db():
     global _db
-    _db = duckdb.connect()
+    _db = duckdb.connect("database.duckdb")
     init_extensions(_db)
     create_tables(_db)
 
@@ -19,4 +19,6 @@ def init_extensions(db):
 
 # gets db instance
 def get_db():
-    return _db
+    db = duckdb.connect("database.duckdb")
+    init_extensions(db)
+    return db

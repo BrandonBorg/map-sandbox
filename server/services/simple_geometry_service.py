@@ -9,7 +9,7 @@ def copy_file_to_table(file_name):
                         source,
                         geometry_3857
                       )
-        SELECT geometry, source, ST_Simplify(ST_Transform(geometry,'EPSG:4326','EPSG:3857',true),10) AS geometry_3857
+        SELECT geometry, source, ST_Transform(geometry,'EPSG:4326','EPSG:3857',true) AS geometry_3857
         FROM read_parquet('{file_path}')           
     """)
 
@@ -26,13 +26,43 @@ def get_simple_geometry():
         SELECT 
             id,
             ST_AsText(geometry_3857) AS geometry_3857,
+            ST_AsText(geometry) AS geometry,
             source
         FROM simple_geometry
         LIMIT 100                  
     """).fetchall()
 
+def get_empty_geom_count_after_clipping(z:int, x:int, y:int):
+    db = get_db()
+    return db.execute("""
+    SELECT
+    COUNT(*) AS intersects_count,
+    COUNT(*) FILTER (
+        WHERE ST_IsEmpty(
+            ST_AsMVTGeom(
+                geometry_3857,
+                ST_Extent(ST_TileEnvelope($1, $2, $3)),
+                4096,
+                256,
+                false
+            )
+        )
+    ) AS empty_after_clip
+    FROM simple_geometry
+    WHERE ST_Intersects(
+        geometry_3857,
+        ST_TileEnvelope($1, $2, $3)
+    );        
+    """,[z, x, y]).fetchall()
+
+def debug_tile(z:int, x:int, y:int):
+    db = get_db()
+    return db.execute("""
+    SELECT ST_AsText(ST_TileEnvelope($1, $2, $3));
+    """,[z, x, y]).fetchall()
+
 # need to re work from here https://duckdb.org/docs/current/core_extensions/spatial/functions#st_asmvt
-def get_tile_data(z:int, x:int, y:int):
+def get_tile_data_old(z:int, x:int, y:int):
     db = get_db()
     return db.execute("""
     WITH tile_Data AS (
@@ -62,6 +92,22 @@ def get_tile_data(z:int, x:int, y:int):
     ) AS mvt
     FROM tile_data;
    
+    """,[z, x, y]).fetchone()
+
+
+def get_tile_data(z:int, x:int, y:int):
+    db = get_db()
+    return db.execute("""
+        SELECT ST_AsMVT({
+            'geom': ST_AsMVTGeom(
+                geometry_3857,
+                ST_Extent(ST_TileEnvelope($1, $2, $3)),
+                4096,
+                256,
+                true
+            )
+        }, 'simple_geometry', 4096, 'geom' )
+        FROM simple_geometry WHERE ST_Intersects(geometry_3857, ST_TileEnvelope($1, $2, $3))
     """,[z, x, y]).fetchone()
 
 
