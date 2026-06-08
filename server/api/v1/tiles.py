@@ -1,7 +1,7 @@
 import gzip
 import time
 from fastapi import APIRouter
-from services.simple_geometry_service import get_tile_data, get_tile_feature_count
+from services.simple_geometry_service import get_tile_data
 from fastapi.responses import Response
 
 tiles_router = APIRouter(prefix="/tiles", tags=["tiles"])
@@ -36,7 +36,4 @@ def get_tiles(z:int,x:int,y:int):
         headers={"Content-Encoding": "gzip"}
     )
 
-@tiles_router.get("/feature_count/{z}/{x}/{y}")
-def get_tiles(z:int,x:int,y:int):
-    feature_count = get_tile_feature_count(z,x,y)
-    return {feature_count}
+
