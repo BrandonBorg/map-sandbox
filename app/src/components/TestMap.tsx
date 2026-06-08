@@ -12,10 +12,8 @@ export default function TestMap()
     {
         if(!mapContainer.current)
         {
-            console.log("oops")
             return
         }
-        console.log("map hit")
         
         const map = new maplibregl.Map({
             container: mapContainer.current, // container id
@@ -24,7 +22,7 @@ export default function TestMap()
             sources: {
                 'simple_geometry': {
                     type: 'vector',
-                    tiles: [`http://127.0.0.1:8000/v1/tiles/simple_geometry/{z}/{x}/{y}.pbf`],
+                    tiles: [`http://127.0.0.1:8000/v1/tiles/simple_geometry/{z}/{x}/{y}`],
                     minzoom: 2
                 },
                 // Also use a public open source basemap
@@ -56,7 +54,7 @@ export default function TestMap()
                     id: 'simple_geometry-fill',
                     type: 'fill',
                     source: 'simple_geometry',
-                    'source-layer': 'layer',
+                    'source-layer': 'simple_geometry',
                     paint: {
                         'fill-color': 'blue',
                         'fill-opacity': 0.6,
@@ -78,6 +76,9 @@ export default function TestMap()
           center: [-63.1311, 46.2382],
             zoom: 12
         })
+
+        map.showTileBoundaries = true;
+        map.showCollisionBoxes = true;
 
         // todo fix this
 

@@ -4,13 +4,14 @@ def create_simple_geometry_table(db):
         CREATE TABLE IF NOT EXISTS simple_geometry (
                id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('simple_geometry_id_sequence'),
                geometry GEOMETRY,
+               geometry_3857 GEOMETRY,
                source STRING
                )               
     """)
     # create index if doesnt exist
     try:
         db.execute("""
-        CREATE INDEX simple_geometry_r_tree on simple_geometry USING RTREE(geometry)
+        CREATE INDEX simple_geometry_r_tree on simple_geometry USING RTREE(geometry_3857)
         """)
     except Exception as e:
         print("Error creating simple_geometry_r_tree index",e)

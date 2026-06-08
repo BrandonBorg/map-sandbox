@@ -9,24 +9,27 @@ tiles_router = APIRouter(prefix="/tiles", tags=["tiles"])
 
 
 #https://gist.github.com/Maxxen/37e4a9f8595ea5e6a20c0c8fbbefe955
-@tiles_router.get("/simple_geometry/{z}/{x}/{y}.pbf")
+@tiles_router.get("/simple_geometry/{z}/{x}/{y}")
 def get_tiles(z:int,x:int,y:int):
 
     
     start = time.time()
     row = get_tile_data(z,x,y)
-    print(f"{z}/{x}/{y} size ${len(row[0])} took {time.time()-start:.2f}s")
     
     # send tile data as response
-    if row is None or row[0] is None:
+    if row is None is None:
+        print(f"{z}/{x}/{y} size 0 took {time.time()-start:.2f}s")
         return Response(
             content=b"",
-            media_type="application/x-protobuf"
+            media_type= "application/vnd.mapbox-vector-tile"
         )
+          
+    print(f"{z}/{x}/{y} size {len(row[0])} took {time.time()-start:.2f}s")
+
 
     return Response(
-        content=gzip.compress(row[0]),
-        media_type="application/x-protobuf",
+        content=gzip.compress(row),
+        media_type="application/vnd.mapbox-vector-tile",
         headers={"Content-Encoding": "gzip"}
     )
 

@@ -4,8 +4,12 @@ def copy_file_to_table(file_name):
     db = get_db()
     file_path = f"files/output/{file_name}.parquet"
     return db.execute(f"""
-        INSERT INTO simple_geometry (geometry, source)
-        SELECT *
+        INSERT INTO simple_geometry (
+                        geometry,
+                        source,
+                        geometry_3857
+                      )
+        SELECT geometry, source, ST_Simplify(ST_Transform(geometry,'EPSG:4326','EPSG:3857',true),10) AS geometry_3857
         FROM read_parquet('{file_path}')           
     """)
 
@@ -21,13 +25,13 @@ def get_simple_geometry():
     return db.execute("""
         SELECT 
             id,
-            ST_AsText(geometry) AS geometry,
+            ST_AsText(geometry_3857) AS geometry_3857,
             source
         FROM simple_geometry
         LIMIT 100                  
     """).fetchall()
 
-# todo redo this entire function
+# need to re work from here https://duckdb.org/docs/current/core_extensions/spatial/functions#st_asmvt
 def get_tile_data(z:int, x:int, y:int):
     db = get_db()
     return db.execute("""
@@ -35,28 +39,33 @@ def get_tile_data(z:int, x:int, y:int):
         SELECT {
             'geometry': ST_AsMVTGeom
                     (
-                        ST_Transform(geometry,'EPSG:4326', 'EPSG:3857', true),
-                        ST_Extent(ST_TileEnvelope($1, $2, $3))
+                        geometry_3857,
+                        ST_Extent(ST_TileEnvelope($1, $2, $3)),
+                            4096,
+                            64,
+                            true
                     ),
                 'source': TRY_CAST("source" AS VARCHAR),
-            } AS feature
+        } AS feature
         FROM simple_geometry
-        WHERE geometry IS NOT NULL
-        AND ST_Intersects(
-            ST_Transform(geometry, 'EPSG:4326', 'EPSG:3857', true),
-            ST_TileEnvelope($1, $2, $3)
+        WHERE ST_Intersects(
+        geometry_3857,
+        ST_TileEnvelope($1, $2, $3)
         )
     )
     
     SELECT ST_AsMVT(
         feature,
         'simple_geometry', -- layer name
-        4096,
+         4096,
         'geometry'
     ) AS mvt
-    FROM tile_data
-    WHERE feature.geometry IS NOT NULL AND NOT ST_IsEmpty(feature.geometry);
+    FROM tile_data;
+   
     """,[z, x, y]).fetchone()
+
+
+
 
 
 
