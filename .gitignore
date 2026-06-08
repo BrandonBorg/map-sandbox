@@ -6,3 +6,5 @@ node_modules/
 server/files/input/
 server/files/output/
 server/database.duckdb
+*.duckdb
+*.wal

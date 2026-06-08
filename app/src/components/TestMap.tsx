@@ -20,9 +20,9 @@ export default function TestMap()
              style: {
             version: 8,
             sources: {
-                'simple_geometry': {
+                'odb_v3': {
                     type: 'vector',
-                    tiles: [`http://127.0.0.1:8000/v1/tiles/simple_geometry/{z}/{x}/{y}`],
+                    tiles: [`http://127.0.0.1:8000/v1/tiles/odb_v3/{z}/{x}/{y}`],
                     minzoom: 2
                 },
                 // Also use a public open source basemap
@@ -53,8 +53,8 @@ export default function TestMap()
                 {
                     id: 'simple_geometry-fill',
                     type: 'fill',
-                    source: 'simple_geometry',
-                    'source-layer': 'simple_geometry',
+                    source: 'odb_v3',
+                    'source-layer': 'odb_v3',
                     paint: {
                         'fill-color': 'blue',
                         'fill-opacity': 0.6,
@@ -64,8 +64,8 @@ export default function TestMap()
                 {
                     id: 'simple_geometry-stroke',
                     type: 'line',
-                    source: 'simple_geometry',
-                    'source-layer': 'simple_geometry',
+                    source: 'odb_v3',
+                    'source-layer': 'odb_v3',
                     paint: {
                         'line-color': 'black',
                         'line-width': 0.5

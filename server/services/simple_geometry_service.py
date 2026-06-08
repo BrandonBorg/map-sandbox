@@ -112,9 +112,6 @@ def get_tile_data(z:int, x:int, y:int):
 
 
 
-
-
-
 def get_tile_feature_count(z:int, x:int, y:int):
     db = get_db()
     return db.execute("""

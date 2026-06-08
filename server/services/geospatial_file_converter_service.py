@@ -1,4 +1,5 @@
 import geopandas as gpd
+import pandas as pd
 
 def geojson_to_parquet (file_name):
     try:
@@ -36,6 +37,10 @@ def gpkg_to_parquet (file_name):
 
         # read geojson file
         gdf = gpd.read_file(input_path, use_arrow=True)
+
+        gdf = gdf.replace("..", None)
+
+        gdf["year_built"] = pd.to_numeric(gdf["year_built"], errors="coerce")
 
         # convert to parquet and store to file
         gdf.to_parquet(

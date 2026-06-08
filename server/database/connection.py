@@ -1,12 +1,13 @@
 import duckdb
 from database.tables import create_tables
 
+db_path = "database/database.duckdb"
 _db = None
 
 # initializes db instance
 def init_db():
     global _db
-    _db = duckdb.connect("database.duckdb")
+    _db = duckdb.connect(db_path)
     init_extensions(_db)
     create_tables(_db)
 
@@ -19,6 +20,6 @@ def init_extensions(db):
 
 # gets db instance
 def get_db():
-    db = duckdb.connect("database.duckdb")
+    db = duckdb.connect(db_path)
     init_extensions(db)
     return db
