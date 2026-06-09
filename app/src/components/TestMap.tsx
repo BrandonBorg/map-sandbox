@@ -22,8 +22,8 @@ export default function TestMap()
             sources: {
                 'odb_v3': {
                     type: 'vector',
-                    tiles: [`http://127.0.0.1:8000/v1/tiles/odb_v3/{z}/{x}/{y}`],
-                    minzoom: 2
+                    tiles: [`http://127.0.0.1:8000/v1/tiles/odb_v/{z}/{x}/{y}`],
+                    minzoom: 10
                 },
                 // Also use a public open source basemap
                 'osm': {
@@ -48,7 +48,6 @@ export default function TestMap()
                     type: 'raster',
                     source: 'osm',
                     minzoom: 2,
-                    maxzoom: 19
                 },
                 {
                     id: 'simple_geometry-fill',
@@ -73,8 +72,8 @@ export default function TestMap()
                 }
             ]
         },
-          center: [-63.1311, 46.2382],
-            zoom: 12
+          center: [-79.347015, 43.651070],
+            zoom: 18
         })
 
         map.showTileBoundaries = true;
