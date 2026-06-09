@@ -11,7 +11,7 @@ def flood_db():
     db = get_db()
     for name in names:
         file_name = f"ODB_v3_{name}"
-        gpkg_to_parquet_zooms(file_name)
+        gpkg_to_parquet(file_name)
         copy_file_to_odb_v3(file_name, db)
         print(f"{file_name} added to db")
     return {"success": True }

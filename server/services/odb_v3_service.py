@@ -26,8 +26,7 @@ def get_record_count():
 
 
 
-def copy_file_to_odb_v3(file_name):
-    db = get_db()
+def copy_file_to_odb_v3(file_name, db):
     file_path = f"files/output/{file_name}.parquet"
     return db.execute(f"""
         INSERT INTO odb_v3 

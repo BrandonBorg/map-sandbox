@@ -22,8 +22,8 @@ export default function TestMap()
             sources: {
                 'odb_v3': {
                     type: 'vector',
-                    tiles: [`http://127.0.0.1:8000/v1/tiles/odb_v/{z}/{x}/{y}`],
-                    minzoom: 10
+                    tiles: [`http://127.0.0.1:8000/v1/tiles/odb_v3/{z}/{x}/{y}`],
+                    minzoom: 12
                 },
                 // Also use a public open source basemap
                 'osm': {
