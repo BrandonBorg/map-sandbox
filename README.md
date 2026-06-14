@@ -4,6 +4,7 @@
 
 ### server commands
 https://fastapi.tiangolo.com/#create-it  
+create .venv => python -m venv .venv
 activate virtual env => .venv\scripts\activate   
 install requirments => pip install -r requirements.txt          
 start fast api => fastapi dev

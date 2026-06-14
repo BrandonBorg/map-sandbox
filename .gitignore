@@ -8,3 +8,4 @@ server/files/output/
 server/database.duckdb
 *.duckdb
 *.wal
+server/h3_lake/
