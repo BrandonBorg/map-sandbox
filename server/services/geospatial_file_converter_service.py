@@ -3,9 +3,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.dataset as ds
 import h3
-
-h3_lake = "h3_lake/res_6/"
-h3_partion_resolution = 6
+from constants.tiles_constants import H3_LAKE_FOLDER, H3_PARTITION_RES
 
 def geojson_to_parquet (file_name):
     # deprecated test function
@@ -88,7 +86,7 @@ def attach_h3_partition_to_gdf(gdf:  gpd.GeoDataFrame):
     # https://gis.stackexchange.com/questions/372564/userwarning-when-trying-to-get-centroid-from-a-polygon-geopandas
     centroid_series = gpd.GeoSeries(gdf["geometry"]).to_crs('+proj=cea').centroid.to_crs(gdf.crs)
     gdf["h3_partition"] = centroid_series.apply(
-        lambda c: h3.latlng_to_cell(c.y, c.x, h3_partion_resolution)
+        lambda c: h3.latlng_to_cell(c.y, c.x, H3_PARTITION_RES)
     )
     return gdf
 
@@ -101,7 +99,7 @@ def write_h3_parquet(gdf:  gpd.GeoDataFrame, file_name:str):
     table = pa.table(arrow)
     ds.write_dataset(
         table,
-        h3_lake,
+        H3_LAKE_FOLDER,
         format="parquet",
         partitioning=["h3_partition"],
         basename_template=f"{file_name}_part_{"{i}"}",

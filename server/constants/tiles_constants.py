@@ -1,0 +1,2 @@
+H3_LAKE_FOLDER = "h3_lake/res_6/"
+H3_PARTITION_RES = 6
