@@ -8,3 +8,4 @@ pyarrow
 mapbox-vector-tile
 h3
 mercantile
+shapely

@@ -2,6 +2,7 @@ import mercantile
 import h3
 from constants.tiles_constants import H3_LAKE_FOLDER, H3_PARTITION_RES
 
+
 def create_duck_db_connection(z:int, x:int, y:int):
     '''    TODO
 
@@ -10,6 +11,15 @@ def create_duck_db_connection(z:int, x:int, y:int):
 
 def get_h3_indexs_for_tile(z:int, x:int, y:int):
     '''
+    Note
+    ----
+    With current h3 res = 6 at time of writting, zoom level can be to high such that tile range is smaller than an h3 hex of res 6
+    this will return empty cells array.
+        Because of this, I have decided to use experimental for now to set containment to overlap.
+
+        This will ofcourse result in more cells at lower zoom levels but each cell has very limited data for now 
+        so I suspect  we will be fine...
+
     Returns
     -------
     h3_index_arry:
@@ -18,14 +28,15 @@ def get_h3_indexs_for_tile(z:int, x:int, y:int):
     # get bounds from tile location using mercantile
     bounds = mercantile.bounds(x, y, z)
 
-    boundary_polygon = h3.LatLngPoly([
-        (bounds.north, bounds.west),
-        (bounds.north, bounds.east),
-        (bounds.south, bounds.east),
-        (bounds.south, bounds.west),
-    ])
+    boundary_polygon = h3.LatLngPoly(
+    [(bounds.south, bounds.west),
+    (bounds.south, bounds.east),
+    (bounds.north, bounds.east),
+    (bounds.north, bounds.west)],
+    )
 
-    return h3.polygon_to_cells(boundary_polygon, H3_PARTITION_RES)
+
+    return h3.h3shape_to_cells_experimental(boundary_polygon, H3_PARTITION_RES, "overlap")
 
 
 
