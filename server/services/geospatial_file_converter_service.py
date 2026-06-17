@@ -102,7 +102,7 @@ def write_h3_parquet(gdf:  gpd.GeoDataFrame, file_name:str):
         H3_LAKE_FOLDER,
         format="parquet",
         partitioning=["h3_partition"],
-        basename_template=f"{file_name}_part_{"{i}"}",
+        basename_template=f"{file_name}_part_{"{i}"}.parquet",
         existing_data_behavior="overwrite_or_ignore"
 
     )

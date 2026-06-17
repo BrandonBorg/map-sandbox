@@ -19,7 +19,7 @@ def init_extensions(db):
     """)
 
 # gets db instance
-def get_db():
+def get_db(db_path):
     db = duckdb.connect(db_path)
     init_extensions(db)
     return db

@@ -2,14 +2,18 @@ import mercantile
 import h3
 from constants.tiles_constants import H3_LAKE_FOLDER, H3_PARTITION_RES
 
-
-def create_duck_db_connection(z:int, x:int, y:int):
-    '''    TODO
-
+def get_h3_indexed_file_paths(z:int, x:int, y:int):
     '''
-    return
+    uzing tile z x y
+    RETURNS
+    -------
+    parquet_file_paths:
+        array of strings containing parquet file paths for the given h3 index
+    '''
+    h3_index_arry = get_h3_indexes_for_tile(z,x,y)
+    return get_parquet_file_paths_from_h3_index_array(h3_index_arry)
 
-def get_h3_indexs_for_tile(z:int, x:int, y:int):
+def get_h3_indexes_for_tile(z:int, x:int, y:int, h3_res = H3_PARTITION_RES):
     '''
     Note
     ----
@@ -36,17 +40,15 @@ def get_h3_indexs_for_tile(z:int, x:int, y:int):
     )
 
 
-    return h3.h3shape_to_cells_experimental(boundary_polygon, H3_PARTITION_RES, "overlap")
+    return h3.h3shape_to_cells_experimental(boundary_polygon, h3_res, "overlap")
 
-
-
-def get_parquet_file_paths_from_h3_index_array(h3_index_array: list[str]):
-    '''    TODO
-
+def get_parquet_file_paths_from_h3_index_array(h3_index_array: list[str], h3_lake_folder = H3_LAKE_FOLDER):
+    ''' 
+    Returns
+    -------
+    parquet_file_paths:
+        array of strings containing parquet file paths for the given h3 index
     '''
-    return
 
-def init_duckdb_with_parquet_file_paths(parquet_file_paths: list[str]):
-    '''    TODO
-    '''
-    return
+    return [h3_lake_folder + h3_index + "/*.parquet" for h3_index in h3_index_array ]
+

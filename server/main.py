@@ -21,12 +21,6 @@ app.add_middleware(
     GZipMiddleware
 )
 
-
-
-@app.on_event("startup")
-def startup():
-    init_db()
-
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
