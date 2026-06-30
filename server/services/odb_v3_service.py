@@ -1,6 +1,7 @@
 
 from database.connection import get_db
-
+#DeprecationWarning
+# service file to test reading from preloaded duckDB file 
 
 def get():
     db = get_db()
@@ -50,3 +51,5 @@ def get_odb_v3_tile_data(z:int, x:int, y:int):
         }, 'odb_v3', 4096, 'geom' )
         FROM odb_v3 WHERE ST_Intersects(geometry_3857, ST_TileEnvelope($1, $2, $3))
     """,[z, x, y]).fetchone()
+
+

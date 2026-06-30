@@ -3,6 +3,7 @@ import time
 from fastapi import APIRouter
 from services.simple_geometry_service import get_tile_data
 from services.odb_v3_service import get_odb_v3_tile_data
+from services.tile_service import get_tile_data_from_h3_index
 from fastapi.responses import Response
 
 tiles_router = APIRouter(prefix="/tiles", tags=["tiles"])
@@ -62,4 +63,29 @@ def get_tiles(z:int,x:int,y:int):
         content=tile,
         media_type="application/vnd.mapbox-vector-tile",
         headers={"Content-Encoding": "gzip"}
+    )
+
+@tiles_router.get("/h3_indexed_parquet/{z}/{x}/{y}")
+def get_tiles(z:int,x:int,y:int):
+
+    start = time.time()
+    row = get_tile_data_from_h3_index(z,x,y)
+
+    # send tile data as response
+    if row is None:
+        print(f"{z}/{x}/{y} size 0 took {time.time()-start:.2f}s")
+        return Response(
+            content=b"",
+            media_type= "application/vnd.mapbox-vector-tile"
+        )
+          
+    tile = row[0]
+    print(
+        f"{z}/{x}/{y}"
+        f"h3_indexed_parquet took {time.time()-start:.2f}s"
+    )
+
+    return Response(
+        content=tile,
+        media_type="application/vnd.mapbox-vector-tile",
     )

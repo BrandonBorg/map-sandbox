@@ -1,5 +1,6 @@
 import duckdb
 from database.tables import create_tables
+#DeprecationWarning
 
 db_path = "database/database.duckdb"
 _db = None
