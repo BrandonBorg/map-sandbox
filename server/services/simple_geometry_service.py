@@ -94,24 +94,6 @@ def get_tile_data_old(z:int, x:int, y:int):
    
     """,[z, x, y]).fetchone()
 
-
-def get_tile_data(z:int, x:int, y:int):
-    db = get_db()
-    return db.execute("""
-        SELECT ST_AsMVT({
-            'geom': ST_AsMVTGeom(
-                geometry_3857,
-                ST_Extent(ST_TileEnvelope($1, $2, $3)),
-                4096,
-                256,
-                true
-            )
-        }, 'simple_geometry', 4096, 'geom' )
-        FROM simple_geometry WHERE ST_Intersects(geometry_3857, ST_TileEnvelope($1, $2, $3))
-    """,[z, x, y]).fetchone()
-
-
-
 def get_tile_feature_count(z:int, x:int, y:int):
     db = get_db()
     return db.execute("""

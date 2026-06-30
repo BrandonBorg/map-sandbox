@@ -23,6 +23,6 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    return {"Version": "1.0.0"}
 
 app.include_router(api_router)

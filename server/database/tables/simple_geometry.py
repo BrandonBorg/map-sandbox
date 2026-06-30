@@ -1,3 +1,6 @@
+
+#example geom table using R tree indexing
+
 def create_simple_geometry_table(db):
     db.execute("""
         CREATE SEQUENCE IF NOT EXISTS simple_geometry_id_sequence START 1;    
