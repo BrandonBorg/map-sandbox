@@ -22,7 +22,8 @@ export default function TestMap()
             sources: {
                 'odb_v3': {
                     type: 'vector',
-                    tiles: [`http://127.0.0.1:8000/v1/tiles/h3_indexed_parquet/{z}/{x}/{y}`],
+                    // geoparquet tile server endpoint
+                    tiles: [`http://127.0.0.1:8000/v1/tiles/{z}/{x}/{y}`],
                     minzoom: 11
                 },
                 // Also use a public open source basemap
@@ -80,9 +81,7 @@ export default function TestMap()
         map.showCollisionBoxes = true;
 
         // todo fix this
-
         mapGL.current = map;
-       
       
     },[])
     

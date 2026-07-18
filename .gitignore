@@ -9,3 +9,5 @@ server/database.duckdb
 *.duckdb
 *.wal
 server/h3_lake/
+geoparquet-tile-server/
+source-data/ODB_v3/ODB_v3*
