@@ -1,0 +1,9 @@
+fastapi[standard]==0.113.0
+pydantic==2.8.0
+
+uvicorn
+duckdb
+geopandas
+pyarrow
+h3
+mercantile
