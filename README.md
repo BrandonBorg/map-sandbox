@@ -6,7 +6,7 @@ This repository is intended as a place to explore different approaches to mappin
 
 - `/app` Vite + React frontend used to render maps and test interface ideas
 - `/geoparquet-tile-server` Python service for ingesting source data and serving vector tiles
-- `/source-data` Source datasets used for experimentation
+- `/source-data` Data to be parsed and loaded into datalakes
 
 ## Experiments / Projects 
 
