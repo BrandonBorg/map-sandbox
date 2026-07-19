@@ -25,7 +25,7 @@ Source files can be placed in the source-data folder and ingested by the tile se
 > Large ODB v3 files are intentionally not tracked in git and should be downloaded separately from the Open Database of Buildings source. See the README in the source-data folder for more details.
 
 ## Running the App
-Run /app and /geoparquet-tile-server
+Run `/app` and `/geoparquet-tile-server`
 
 ## Helpful References
 
@@ -33,4 +33,5 @@ Run /app and /geoparquet-tile-server
 - GeoPandas: https://geopandas.org/
 - GeoParquet / Arrow: https://geopandas.org/en/stable/docs/user_guide/io.html#to-arrow
 - Vector tile pipelines / https://www.vector-tile.com/
+- DuckDB Spatial / https://duckdb.org/docs/current/core_extensions/spatial/functions
 
