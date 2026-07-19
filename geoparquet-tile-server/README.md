@@ -6,10 +6,10 @@ This project provides a lightweight pipeline and tile serving backend for geospa
 
 ### Project Structure
 
-- api/ - FastAPI route definitions
-- services/ - ingestion, parquet orchestration, and tile generation logic
-- constants/ - shared configuration values
-- h3_lake/ - partitioned parquet output data
+- `api/` - FastAPI route definitions
+- `services` - ingestion, parquet orchestration, and tile generation logic
+- `constants/` - shared configuration values
+- `h3_lake/` - partitioned parquet output data
 
 ### Typical Workflow
 
