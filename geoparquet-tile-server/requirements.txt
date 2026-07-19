@@ -5,4 +5,5 @@ uvicorn
 duckdb
 geopandas
 pyarrow
-mapbox-vector-tile
+h3
+mercantile

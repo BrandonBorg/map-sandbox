@@ -1,10 +1,9 @@
 app/.vite/deps/
-server/.venv/
+geoparquet-tile-server/.venv/
 **/__pycache__/**
 package-lock.json
 node_modules/
-server/files/input/
-server/files/output/
-server/database.duckdb
 *.duckdb
 *.wal
+geoparquet-tile-server/h3_lake/
+source-data/ODB_v3/ODB_v3*

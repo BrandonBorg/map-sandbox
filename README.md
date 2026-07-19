@@ -1,19 +1,34 @@
-# map-sandbox
+# Map Sandbox
 
-## Help
+This repository is intended as a place to explore different approaches to mapping, infrastructure, and spatial data solutions through experimentation.
 
-### server commands
-https://fastapi.tiangolo.com/#create-it  
-activate virtual env => .venv\scripts\activate   
-install requirments => pip install -r requirements.txt          
-start fast api => fastapi dev
-stop virtual env => deactivate 
+## Project Structure
 
-### helpful docs
-https://geopandas.org/en/stable/docs/user_guide/io.html#to-arrow
+- `/app` Vite + React frontend used to render maps and test interface ideas
+- `/geoparquet-tile-server` Python service for ingesting source data and serving vector tiles
+- `/source-data` Data to be parsed and loaded into datalakes
 
-## Pipelines
+## Experiments / Projects 
 
-### reading geojson -> parquet 
-files can be placed inside files/input folder to be read, converted, and outputed to files/output to later be read and stored inside of duckdb
--- files in these folders are ingored from git tracking.
+### 1. Geoparquet Tile Server
+A simple vector tile pipeline is now in place, including a GeoParquet based data lake with H3 indexed partitioning. This provides a foundation for serving map data through a lightweight tile-server workflow.
+
+## Data Pipeline
+
+### GeoPackage / GeoJSON to Parquet
+
+Source files can be placed in the source-data folder and ingested by the tile server pipeline. The pipeline converts them into H3-partitioned Parquet data for efficient tile serving.
+
+> Large ODB v3 files are intentionally not tracked in git and should be downloaded separately from the Open Database of Buildings source. See the README in the source-data folder for more details.
+
+## Running the App
+Run /app and /geoparquet-tile-server
+
+## Helpful References
+
+- FastAPI: https://fastapi.tiangolo.com/
+- GeoPandas: https://geopandas.org/
+- GeoParquet / Arrow: https://geopandas.org/en/stable/docs/user_guide/io.html#to-arrow
+- Vector tile pipelines / https://www.vector-tile.com/
+
+

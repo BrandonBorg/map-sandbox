@@ -1,11 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
-from database.connection import init_db
 from api.router import api_router
 
 app = FastAPI()
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,14 +19,13 @@ app.add_middleware(
     GZipMiddleware
 )
 
-
-
-@app.on_event("startup")
-def startup():
-    init_db()
-
 @app.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    return {"Version": "1.0.0"}
 
 app.include_router(api_router)
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
