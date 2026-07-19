@@ -19,8 +19,6 @@ This project provides a lightweight pipeline and tile serving backend for geospa
 
 ### Loading data to lake
 
-The load flow can be found in the route and service layers respectively.
-
 The current pipeline pulls data from the source-data/ODB_v3 folder. The bulk load API can be used with a few files at a time, or with all files if desired, though ingestion currently takes a few seconds to minutes per file depending on the machine.
 
 The process performs very minor cleanup, converts the GeoPackage into a GeoDataFrame, and applies a small amount of pandas-based cleanup. It then attaches an H3 partition field to the data, which is later used for partitioning. Once the GeoDataFrame is ready, it is written to the data lake and partitioned based on the assigned H3 index. At the time of writing, the H3 resolution is hard-coded to resolution 6.
