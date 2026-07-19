@@ -29,7 +29,3 @@ To create a production build:
 ```bash
 npm run build
 ```
-
-## Notes
-
-The frontend is intended to be a flexible testing surface for visualizing geospatial data served by the backend tile service.
