@@ -12,6 +12,9 @@ This repository is intended as a place to explore different approaches to mappin
 
 ### 1. Geoparquet Tile Server
 A simple vector tile pipeline is now in place, including a GeoParquet based data lake with H3 indexed partitioning. This provides a foundation for serving map data through a lightweight tile-server workflow.
+Uses `/app` and `/geoparquet-tile-server`
+
+https://github.com/user-attachments/assets/ec3d7d6f-6d9a-46a9-be76-8f5671aba2b9
 
 ## Data Pipeline
 
@@ -30,5 +33,4 @@ Run /app and /geoparquet-tile-server
 - GeoPandas: https://geopandas.org/
 - GeoParquet / Arrow: https://geopandas.org/en/stable/docs/user_guide/io.html#to-arrow
 - Vector tile pipelines / https://www.vector-tile.com/
-
 
